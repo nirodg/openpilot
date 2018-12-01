@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 import os
 import sys
 import fcntl
@@ -24,7 +24,8 @@ def unblock_stdout():
 
     while True:
       try:
-        dat = os.read(child_pty, 4096)
+        # dat = os.read(child_pty, 4096)
+        dat = open(child_pty, 'wb')
       except OSError as e:
         if e.errno == errno.EIO:
           break
@@ -34,7 +35,7 @@ def unblock_stdout():
         break
 
       try:
-        sys.stdout.write(dat)
+        sys.stdout.write(dat.read())
       except (OSError, IOError):
         pass
 
